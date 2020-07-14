@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 
-<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="not_working" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <link name="robot_footprint"></link>
 
@@ -20,7 +20,7 @@
 -->
 
   <joint type="continuous" name="left_wheel_hinge">
-      <origin xyz="0 0.15 0" rpy="0 0 0"/>
+      <origin xyz="-0.25 0.15 0" rpy="0 0 0"/>
       <child link="left_wheel"/>
       <parent link="chassis"/>
       <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -29,7 +29,7 @@
   </joint>
 
   <joint type="continuous" name="right_wheel_hinge">
-      <origin xyz="0 -0.15 0" rpy="0 0 0"/>
+      <origin xyz="-0.25 -0.15 0" rpy="0 0 0"/>
       <child link="right_wheel"/>
       <parent link="chassis"/>
       <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -38,14 +38,14 @@
   </joint>
 
   <joint type="fixed" name="camera_joint">
-      <origin xyz="0.2 0 0" rpy="0 0 0"/>
+      <origin xyz="0.1 0 0" rpy="0 0 0"/>
       <child link="camera"/>
       <parent link="chassis"/>
       <axis xyz="0 1 0" rpy="0 0 0"/>
   </joint>
 
   <joint type="fixed" name="hookuyo_joint">
-      <origin xyz="0.15 0 0.1" rpy="0 0 0"/>
+      <origin xyz="0.05 0 0.1" rpy="0 0 0"/>
       <child link="hokuyo"/>
       <parent link="chassis"/>
       <axis xyz="0 1 0" rpy="0 0 0"/>
@@ -61,7 +61,7 @@
     <pose>0 0 0.1 0 0 0</pose>
 
     <inertial>
-      <mass value="15.0"/>
+      <mass value="12.0"/>
       <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
       <inertia
           ixx="0.1" ixy="0" ixz="0"
@@ -73,59 +73,87 @@
     <collision name='collision'>
       <origin xyz="0 0 0" rpy=" 0 0 0"/>
       <geometry>
-        <cylinder radius=".2" length=".1"/>
+        <box size=".2 .18 .1"/>
       </geometry>
     </collision>
 
     <visual name='chassis_visual'>
       <origin xyz="0 0 0" rpy=" 0 0 0"/>
       <geometry>
-        <cylinder radius=".2" length=".1"/>
-      </geometry>
-    </visual>
-
-
-    <collision name='back_caster_collision'>
-      <origin xyz="-0.15 0 -0.05" rpy=" 0 0 0"/>
-      <geometry>
-        <sphere radius="0.0489"/>
-      </geometry>
-    </collision>
-
-    <visual name='back_caster_visual'>
-      <origin xyz="-0.15 0 -0.05" rpy=" 0 0 0"/>
-      <geometry>
-        <sphere radius="0.049"/>
+        <box size=".2 .18 .1"/>
       </geometry>
     </visual>
 
     <collision name='front_caster_collision'>
-      <origin xyz="0.15 0 -0.05" rpy=" 0 0 0"/>
+      <origin xyz="0.0 0 -0.05" rpy=" 0 0 0"/>
       <geometry>
         <sphere radius="0.0489"/>
       </geometry>
     </collision>
 
     <visual name='front_caster_visual'>
-      <origin xyz="0.15 0 -0.05" rpy=" 0 0 0"/>
+      <origin xyz="0.0 0 -0.05" rpy=" 0 0 0"/>
       <geometry>
         <sphere radius="0.049"/>
       </geometry>
     </visual>
 
+    <collision name='right_connection'>
+      <origin xyz="-.1 -0.1 0" rpy=" 0 0 0"/>
+      <geometry>
+        <box size=".4 .02 .1"/>
+      </geometry>
+    </collision>
+
+    <visual name='right_connection_visual'>
+      <origin xyz="-.1 -0.1 0" rpy=" 0 0 0"/>
+      <geometry>
+        <box size=".4 .02 .1"/>
+      </geometry>
+    </visual>
+
+    <collision name='left_connection'>
+      <origin xyz="-.1 0.1 0" rpy=" 0 0 0"/>
+      <geometry>
+        <box size=".4 .02 .1"/>
+      </geometry>
+    </collision>
+
+    <visual name='left_connection_visual'>
+      <origin xyz="-.1 0.1 0" rpy=" 0 0 0"/>
+      <geometry>
+        <box size=".4 .02 .1"/>
+      </geometry>
+    </visual>
+
     <collision name='supporting_box'>
-      <origin xyz="0.15 0 0.0575" rpy=" 0 0 0"/>
+      <origin xyz="0.05 0 0.0575" rpy=" 0 0 0"/>
       <geometry>
         <box size=".1 .1 .015"/>
       </geometry>
     </collision>
 
     <visual name='supporing_box_visual'>
-      <origin xyz="0.15 0 0.0575" rpy=" 0 0 0"/>
+      <origin xyz="0.05 0 0.0575" rpy=" 0 0 0"/>
       <geometry>
         <box size=".1 .1 .015"/>
       </geometry>
     </visual>
+
+    <collision name='cylinder'>
+      <origin xyz="-.25 0 0" rpy="0 1.5707 1.5707"/>
+      <geometry>
+        <cylinder radius=".05" length=".18"/>
+      </geometry>
+    </collision>
+
+    <visual name='cylinder_visual'>
+      <origin xyz="-.25 0 0" rpy="0 1.5707 1.5707"/>
+      <geometry>
+        <cylinder radius=".05" length=".2"/>
+      </geometry>
+    </visual>
+
 
   </link>
 
@@ -232,48 +260,20 @@
 
 
   <gazebo reference="chassis">
-  <visual>
-    <material>
-      <ambient>0.6039 0.6039 0.85098 1.0</ambient>
-      <diffuse>0.6039 0.6039 0.85098 1.0</diffuse>
-      <specular>0.6039 0.6039 0.85098 1.0</specular>
-      <emissive>0 0 0 0</emissive>
-    </material>
-  </visual>
-</gazebo>
+      <material>Gazebo/Gold</material>
+  </gazebo>
 
   <gazebo reference="left_wheel">
-      <visual>
-        <material>
-          <ambient>0.65882 0.8  0.72941 1.0</ambient>
-          <diffuse>0.65882 0.8  0.72941 1.0</diffuse>
-          <specular>0.65882 0.8  0.72941 1.0</specular>
-          <emissive>0.0 0.0 0.0 0.0</emissive>
-        </material>
-      </visual>
-    </gazebo>
+      <material>Gazebo/Blue</material>
+  </gazebo>
 
   <gazebo reference="right_wheel">
-      <visual>
-        <material>
-          <ambient>0.65882 0.8  0.72941 1.0</ambient>
-          <diffuse>0.65882 0.8  0.72941 1.0</diffuse>
-          <specular>0.65882 0.8  0.72941 1.0</specular>
-          <emissive>0.0 0.0 0.0 0.0</emissive>
-        </material>
-      </visual>
-    </gazebo>
+      <material>Gazebo/Blue</material>
+  </gazebo>
 
- <gazebo reference="camera">
-     <visual>
-       <material>
-         <ambient>0.7451 0.5098 0.5098 1.0</ambient>
-         <diffuse>0.7451 0.5098 0.5098 1.0</diffuse>
-         <specular>0.7451 0.5098 0.5098 1.0</specular>
-         <emissive>0.0 0.0 0.0 0.0</emissive>
-       </material>
-     </visual>
- </gazebo>
+  <gazebo reference="camera">
+      <material>Gazebo/Purple</material>
+  </gazebo>
 
 
 
